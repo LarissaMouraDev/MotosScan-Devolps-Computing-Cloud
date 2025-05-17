@@ -16,12 +16,12 @@ namespace MotoScan.Data
                 return; // DB já foi populado
             }
 
-            // Criar dados iniciais (5 inserts com conteúdo significativo)
+            // Criar dados iniciais com modelos reais da Mottu
             var motos = new Moto[]
             {
                 new Moto
                 {
-                    Modelo = "Honda CB 500",
+                    Modelo = "Honda CG 160",      // Modelo usado pela Mottu
                     Placa = "ABC1234",
                     Estado = "Bom",
                     Localizacao = "Pátio A",
@@ -29,7 +29,7 @@ namespace MotoScan.Data
                 },
                 new Moto
                 {
-                    Modelo = "Yamaha Fazer 250",
+                    Modelo = "Honda Pop 110i",    // Modelo original da Mottu
                     Placa = "DEF5678",
                     Estado = "Excelente",
                     Localizacao = "Pátio B",
@@ -37,7 +37,7 @@ namespace MotoScan.Data
                 },
                 new Moto
                 {
-                    Modelo = "Kawasaki Ninja 400",
+                    Modelo = "Mottu Sport 110i",  // Modelo principal da Mottu (fabricado pela TVS)
                     Placa = "GHI9012",
                     Estado = "Regular",
                     Localizacao = "Pátio A",
@@ -46,7 +46,7 @@ namespace MotoScan.Data
                 },
                 new Moto
                 {
-                    Modelo = "Suzuki GSX-S750",
+                    Modelo = "Mottu-e",           // Modelo elétrico da Mottu
                     Placa = "JKL3456",
                     Estado = "Bom",
                     Localizacao = "Saída",
@@ -55,7 +55,7 @@ namespace MotoScan.Data
                 },
                 new Moto
                 {
-                    Modelo = "BMW R 1250 GS",
+                    Modelo = "Honda Biz 125",     // Outro modelo usado pela Mottu
                     Placa = "MNO7890",
                     Estado = "Excelente",
                     Localizacao = "Pátio C",

@@ -10,23 +10,23 @@ namespace MotoScan.Models
 
         [Required]
         [StringLength(100)]
-        public string Modelo { get; set; }
+        public string Modelo { get; set; } = string.Empty;  // Adicionado inicializador
 
         [Required]
         [StringLength(20)]
-        public string Placa { get; set; }
+        public string Placa { get; set; } = string.Empty;  // Adicionado inicializador
 
         [StringLength(50)]
-        public string Estado { get; set; }
+        public string Estado { get; set; } = "Bom";  // Adicionado inicializador
 
         [StringLength(100)]
-        public string Localizacao { get; set; }
+        public string Localizacao { get; set; } = "Pátio A";  // Adicionado inicializador
 
         public DateTime? UltimoCheckIn { get; set; }
 
         public DateTime? UltimoCheckOut { get; set; }
 
         [StringLength(255)]
-        public string ImagemUrl { get; set; }
+        public string? ImagemUrl { get; set; }  // Marcado como nullable
     }
 }

@@ -1,6 +1,26 @@
 @MotoScan_HostAddress = http://localhost:5087
 
-GET {{MotoScan_HostAddress}}/weatherforecast/
+GET {{MotoScan_HostAddress}}/api/Motos
 Accept: application/json
 
 ###
+
+GET {{MotoScan_HostAddress}}/api/Motos/1
+Accept: application/json
+
+###
+
+GET {{MotoScan_HostAddress}}/api/Motos/placa/ABC1234
+Accept: application/json
+
+###
+
+POST {{MotoScan_HostAddress}}/api/Motos
+Content-Type: application/json
+
+{
+  "modelo": "Honda CG 160",
+  "placa": "XYZ9876",
+  "estado": "Excelente",
+  "localizacao": "Entrada"
+}

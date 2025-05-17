@@ -4,31 +4,21 @@ using MotoScan.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container
+// Adicionar os serviços
 builder.Services.AddControllers();
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSwaggerGen();
 
-// Configure Oracle
+// Configuração do DbContext Oracle
 builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseOracle(builder.Configuration.GetConnectionString("OracleConnection")));
 
-// Add ImagemService
+// Registrar o ImagemService
 builder.Services.AddScoped<ImagemService>();
-
-// Configure Swagger
-builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen(c =>
-{
-    c.SwaggerDoc("v1", new Microsoft.OpenApi.Models.OpenApiInfo
-    {
-        Title = "API de Check-in/Check-out de Motos",
-        Version = "v1",
-        Description = "API para gerenciamento de check-in e check-out de motos"
-    });
-});
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline
+// Configure o pipeline HTTP
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
@@ -38,13 +28,23 @@ if (app.Environment.IsDevelopment())
     using (var scope = app.Services.CreateScope())
     {
         var services = scope.ServiceProvider;
-        var context = services.GetRequiredService<AppDbContext>();
-        DbInitializer.Initialize(context);
+        try
+        {
+            var context = services.GetRequiredService<AppDbContext>();
+            DbInitializer.Initialize(context);
+        }
+        catch (Exception ex)
+        {
+            // Como ILogger<Program> pode não estar disponível, use Console
+            Console.Error.WriteLine($"Ocorreu um erro ao inicializar o banco de dados: {ex.Message}");
+        }
     }
 }
 
+// Habilitar arquivos estáticos (para as imagens)
+app.UseStaticFiles();
+
 app.UseHttpsRedirection();
-app.UseStaticFiles(); // Para servir arquivos estáticos (imagens)
 app.UseAuthorization();
 app.MapControllers();
 
