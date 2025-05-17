@@ -1,0 +1,6 @@
+@MotoScan_HostAddress = http://localhost:5087
+
+GET {{MotoScan_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
