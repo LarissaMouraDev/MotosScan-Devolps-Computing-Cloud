@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Linq;
-using MotoScan.Models;
+using MotosScan.Models;
 
-namespace MotoScan.Data
+namespace MotosScan.Data
 {
     public static class DbInitializer
     {
@@ -21,7 +21,7 @@ namespace MotoScan.Data
             {
                 new Moto
                 {
-                    Modelo = "Honda CG 160",      // Modelo usado pela Mottu
+                    Modelo = "Honda CG 160",
                     Placa = "ABC1234",
                     Estado = "Bom",
                     Localizacao = "Pátio A",
@@ -29,7 +29,7 @@ namespace MotoScan.Data
                 },
                 new Moto
                 {
-                    Modelo = "Honda Pop 110i",    // Modelo original da Mottu
+                    Modelo = "Honda Pop 110i",
                     Placa = "DEF5678",
                     Estado = "Excelente",
                     Localizacao = "Pátio B",
@@ -37,7 +37,7 @@ namespace MotoScan.Data
                 },
                 new Moto
                 {
-                    Modelo = "Mottu Sport 110i",  // Modelo principal da Mottu (fabricado pela TVS)
+                    Modelo = "Mottu Sport 110i",
                     Placa = "GHI9012",
                     Estado = "Regular",
                     Localizacao = "Pátio A",
@@ -46,7 +46,7 @@ namespace MotoScan.Data
                 },
                 new Moto
                 {
-                    Modelo = "Mottu-e",           // Modelo elétrico da Mottu
+                    Modelo = "Mottu-e",
                     Placa = "JKL3456",
                     Estado = "Bom",
                     Localizacao = "Saída",
@@ -55,7 +55,7 @@ namespace MotoScan.Data
                 },
                 new Moto
                 {
-                    Modelo = "Honda Biz 125",     // Outro modelo usado pela Mottu
+                    Modelo = "Honda Biz 125",
                     Placa = "MNO7890",
                     Estado = "Excelente",
                     Localizacao = "Pátio C",

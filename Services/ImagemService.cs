@@ -2,8 +2,9 @@
 using System.IO;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Hosting;
 
-namespace MotoScan.Services
+namespace MotosScan.Services
 {
     public class ImagemService
     {

@@ -1,33 +1,56 @@
-﻿# API de Check-in/Check-out de Motos (MotoScan)
+﻿# MotosScan API - Projeto DevOps & Cloud Computing
 
 ## Descrição do Projeto
-API RESTful para gerenciamento de check-in e check-out de motos utilizando visão computacional. O sistema permite registrar entrada e saída de motos através de fotos ou QR codes, com reconhecimento automático do modelo, estado e localização.
+MotosScan é uma API RESTful para gerenciamento de uma frota de motocicletas da Mottu, desenvolvida com ASP.NET Core e implantada em ambiente de nuvem Azure. A API permite o controle de entrada e saída de motos, gerenciamento de informações da frota e persistência de dados.
+
+## Membros da Equipe
+- Larissa de Freitas Moura - RM555136
+- João Victor Rebello - RM555287
+- Guilherme Francisco Silva - RM557648
 
 ## Tecnologias Utilizadas
 - ASP.NET Core 8.0
 - Entity Framework Core
-- Oracle Database
+- SQLite (banco de dados local para demonstração)
 - Docker
 - Azure Cloud
+- Swagger/OpenAPI
+- Git/GitHub
 
-## Rotas da API
-- `GET /api/Motos` - Lista todas as motos
-- `GET /api/Motos/{id}` - Obtém detalhes de uma moto específica
-- `GET /api/Motos/placa/{placa}` - Busca moto pela placa
-- `POST /api/Motos` - Registra uma nova moto
-- `PUT /api/Motos/{id}` - Atualiza informações de uma moto
-- `DELETE /api/Motos/{id}` - Remove uma moto do sistema
-- `POST /api/Motos/checkin` - Realiza check-in de uma moto via imagem
-- `POST /api/Motos/checkout` - Realiza check-out de uma moto via imagem
+## Modelo de Dados
+A entidade principal `Moto` possui os seguintes atributos:
+- `Id` (int): Identificador único da moto
+- `Modelo` (string): Modelo da moto (ex: Honda CG 160)
+- `Placa` (string): Placa da moto (ex: ABC1234)
+- `Estado` (string): Estado de conservação (Bom, Regular, Excelente)
+- `Localizacao` (string): Localização atual da moto (Pátio A, Saída, etc)
+- `UltimoCheckIn` (DateTime?): Data e hora do último check-in
+- `UltimoCheckOut` (DateTime?): Data e hora do último check-out
+- `ImagemUrl` (string): URL para a imagem da moto (se disponível)
 
-## Instruções de Instalação
+## Endpoints da API
 
-### Execução Local
-1. Clone este repositório
-2. Execute `dotnet restore` para restaurar as dependências
-3. Configure a string de conexão do Oracle no arquivo `appsettings.json`
-4. Execute `dotnet ef database update` para criar o banco de dados
-5. Execute `dotnet run` para iniciar a aplicação
+### Operações CRUD Básicas
+- `GET /api/Motos`: Lista todas as motos cadastradas
+- `GET /api/Motos/{id}`: Busca moto pelo ID numérico
+- `GET /api/Motos/placa/{placa}`: Busca moto pela placa (ex: ABC1234)
+- `POST /api/Motos`: Adiciona nova moto à frota
+- `PUT /api/Motos/{id}`: Atualiza informações de uma moto existente
+- `DELETE /api/Motos/{id}`: Remove uma moto do sistema
 
-### Execução com Docker
-1. Construa a imagem Docker:
+### Operações de Check-in/Check-out
+- `POST /api/Motos/checkin?placa={placa}`: Registra entrada de moto com imagem
+- `POST /api/Motos/checkout?placa={placa}`: Registra saída de moto com imagem
+
+## Instruções de Instalação e Execução Local
+
+### Pré-requisitos
+- .NET SDK 8.0
+- Docker Desktop
+- Git
+- Visual Studio 2022 ou VS Code
+
+### Clonar o Repositório
+```bash
+git clone https://github.com/SeuUsuario/MotosScan-API.git
+cd MotosScan-API

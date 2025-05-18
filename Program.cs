@@ -1,50 +1,72 @@
 using Microsoft.EntityFrameworkCore;
-using MotoScan.Data;
-using MotoScan.Services;
+using Microsoft.OpenApi.Models;
+using MotosScan.Data;
+using MotosScan.Data;
+using MotosScan.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Adicionar os serviços
+// Adicionar serviços ao container
 builder.Services.AddControllers();
-builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
 
-// Configuração do DbContext Oracle
+// Configurar Entity Framework com SQLite
 builder.Services.AddDbContext<AppDbContext>(options =>
-    options.UseOracle(builder.Configuration.GetConnectionString("OracleConnection")));
+    options.UseSqlite(builder.Configuration.GetConnectionString("SqliteConnection")));
 
-// Registrar o ImagemService
+// Registrar serviços
 builder.Services.AddScoped<ImagemService>();
+
+// Configurar Swagger/OpenAPI
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSwaggerGen(c =>
+{
+    c.SwaggerDoc("v1", new OpenApiInfo
+    {
+        Title = "MotosScan API",
+        Version = "v1",
+        Description = "API para gerenciamento de frota de motos da Mottu",
+        Contact = new OpenApiContact
+        {
+            Name = "Equipe MotosScan",
+            Email = "equipe@motosscan.com"
+        }
+    });
+});
 
 var app = builder.Build();
 
-// Configure o pipeline HTTP
+// Configurar pipeline de requisições HTTP
 if (app.Environment.IsDevelopment())
 {
-    app.UseSwagger();
-    app.UseSwaggerUI();
+    app.UseDeveloperExceptionPage();
+}
 
-    // Inicializar o banco de dados com dados de teste
-    using (var scope = app.Services.CreateScope())
+// Ativar Swagger em todos os ambientes
+app.UseSwagger();
+app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "MotosScan API v1"));
+
+// Criar o banco de dados e inicializar com dados de exemplo
+using (var scope = app.Services.CreateScope())
+{
+    var services = scope.ServiceProvider;
+    try
     {
-        var services = scope.ServiceProvider;
-        try
-        {
-            var context = services.GetRequiredService<AppDbContext>();
-            DbInitializer.Initialize(context);
-        }
-        catch (Exception ex)
-        {
-            // Como ILogger<Program> pode não estar disponível, use Console
-            Console.Error.WriteLine($"Ocorreu um erro ao inicializar o banco de dados: {ex.Message}");
-        }
+        var context = services.GetRequiredService<AppDbContext>();
+        // Garantir que o banco seja criado
+        context.Database.EnsureCreated();
+        // Inicializar com dados de exemplo
+        DbInitializer.Initialize(context);
+        Console.WriteLine("Banco de dados criado e inicializado com sucesso!");
+    }
+    catch (Exception ex)
+    {
+        Console.WriteLine($"Erro ao inicializar o banco de dados: {ex.Message}");
     }
 }
 
-// Habilitar arquivos estáticos (para as imagens)
-app.UseStaticFiles();
-
 app.UseHttpsRedirection();
+app.UseStaticFiles();
+app.UseRouting();
 app.UseAuthorization();
 app.MapControllers();
 

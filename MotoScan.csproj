@@ -12,10 +12,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Include="Controllers\MotosController" />
-  </ItemGroup>
-
-  <ItemGroup>
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="9.0.5" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="9.0.4">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
@@ -26,8 +23,13 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Controllers\" />
     <Folder Include="wwwroot\Imagens\Checkin\" />
     <Folder Include="wwwroot\Imagens\Checkout\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="MotosScan.csproj" />
   </ItemGroup>
 
 </Project>

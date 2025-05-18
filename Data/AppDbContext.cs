@@ -1,7 +1,9 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using MotoScan.Models;
+using MotosScan.Models;
+using System;
+using System.Linq;
 
-namespace MotoScan.Data
+namespace MotosScan.Data
 {
     public class AppDbContext : DbContext
     {
@@ -17,6 +19,19 @@ namespace MotoScan.Data
             modelBuilder.Entity<Moto>()
                 .HasIndex(m => m.Placa)
                 .IsUnique();
+
+            // SQLite não suporta alguns tipos de dados, então é necessário fazer ajustes
+            foreach (var entityType in modelBuilder.Model.GetEntityTypes())
+            {
+                var properties = entityType.ClrType.GetProperties()
+                    .Where(p => p.PropertyType == typeof(DateTime) || p.PropertyType == typeof(DateTime?));
+
+                foreach (var property in properties)
+                {
+                    modelBuilder.Entity(entityType.Name).Property(property.Name)
+                        .HasConversion<string>();
+                }
+            }
         }
     }
 }
